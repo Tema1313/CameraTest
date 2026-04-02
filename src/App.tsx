@@ -1,6 +1,6 @@
 // import { useState } from "react";
 import "./App.css";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam"
 
 
@@ -32,19 +32,13 @@ function App() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
 
-  const startTimer = async () => {
+  const startTimer = () => {
     intervalRef.current = setInterval(() => {
       setTimer((prev) => {
         if (prev <= 1) {
           clearInterval(intervalRef.current!)
-
-          setTimeout(() => {
-            startFaceId()
-          }, 0)
-
           return 0
         }
-
         return prev - 1
       })
     }, 1000)
@@ -52,10 +46,17 @@ function App() {
 
   const startFaceId = () => {
     setTimeout(() => {
+      console.log("Отработал")
       setIsSubmitting(false)
       setTimer(defaultDelay)
     }, 3000)
   }
+
+  useEffect(() => {
+    if (timer === 0) {
+      startFaceId()
+    }
+  }, [timer])
 
   const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent)
 
