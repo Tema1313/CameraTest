@@ -88,6 +88,7 @@ function App() {
   // };
 
   const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent)
+  console.log(navigator.userAgent)
 
   return (
     <>
@@ -122,6 +123,7 @@ function App() {
         </button>
       </div>
       <div>это мобилка: {isMobile ? "Да" : "Нет"}</div>
+      <div>{navigator.userAgent}</div>
       {/* {disabled ? (
         <div>Загрузка</div>
       ) : (
