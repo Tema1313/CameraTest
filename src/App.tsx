@@ -124,6 +124,7 @@ function App() {
           {frontCamera ? "включить переднюю камеру" : "включить фронтальную камеру"}
         </button>
       </div>
+      <div>количество девайсов: {videoDevices.length}</div>
       {/* {disabled ? (
         <div>Загрузка</div>
       ) : (
