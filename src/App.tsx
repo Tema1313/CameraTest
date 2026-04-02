@@ -81,7 +81,8 @@ function App() {
 
   return (
     <>
-      {disabled ? (
+    update
+      {/* {disabled ? (
         <div>Загрузка</div>
       ) : (
         <button
@@ -91,7 +92,7 @@ function App() {
         >
           Войти по Face-Id
         </button>
-      )}
+      )} */}
     </>
   );
 }
