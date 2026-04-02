@@ -1,6 +1,6 @@
 // import { useState } from "react";
 import "./App.css";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Webcam from "react-webcam"
 
 
@@ -24,7 +24,7 @@ import Webcam from "react-webcam"
 
 function App() {
   const webcamRef = useRef<Webcam | null>(null)
-  const [videoDevices, setVideoDevices] = useState<MediaDeviceInfo[]>([])
+  // const [videoDevices, setVideoDevices] = useState<MediaDeviceInfo[]>([])
   const [frontCamera, setFrontCamera] = useState<boolean>(true)
 
 
@@ -86,13 +86,8 @@ function App() {
   //     alert("Ошибка с камерой");
   //   }
   // };
-  useEffect(() => {
-    navigator.mediaDevices.enumerateDevices().then((devices) => {
-      const videos = devices.filter((d) => d.kind === "videoinput")
-      setVideoDevices(videos)
-    })
 
-  }, [])
+  const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent)
 
   return (
     <>
@@ -105,7 +100,9 @@ function App() {
         style={{
           borderRadius: "50%",
         }}
-        mirrored={videoDevices.length <= 1 ? true : frontCamera}
+        mirrored={isMobile
+          ? frontCamera
+          : true}
         width={300}
         height={300}
         onUserMediaError={() => {
@@ -118,13 +115,13 @@ function App() {
         }}
       />
       <div className="mb-2 d-flex align-items-center">
-        <button className="ms-2 check-label" onClick={()=>{
+        <button className="ms-2 check-label" onClick={() => {
           setFrontCamera(!frontCamera)
         }}>
           {frontCamera ? "включить переднюю камеру" : "включить фронтальную камеру"}
         </button>
       </div>
-      <div>количество девайсов: {videoDevices.length}</div>
+      <div>это мобилка: {isMobile ? "Да" : "Нет"}</div>
       {/* {disabled ? (
         <div>Загрузка</div>
       ) : (
