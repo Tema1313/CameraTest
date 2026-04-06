@@ -99,20 +99,22 @@ function App() {
                 screenshotFormat="image/jpeg"
                 style={{
                   borderRadius: "50%",
+                  height: 300,
+                  width: 300,
+                  objectFit: "cover",
                 }}
                 mirrored={isMobile
                   ? frontCamera
                   : true}
-                width={300}
-                height={300}
                 onUserMediaError={() => {
                   window.alert("не получили девайсы")
                 }}
                 videoConstraints={{
                   facingMode: frontCamera ? "user" : "environment",
-                  width: 300,
-                  height: 300,
+                  width: 480,
+                  height: 640,
                 }}
+                forceScreenshotSourceSize
               />
             </> :
             <span>Обработка...</span>
