@@ -54,44 +54,17 @@ function App() {
 
   const startFaceId = async () => {
     if (image) {
-      const img = new Image()
-      img.src = image
-
-      img.onload = async () => {
-        const canvas = document.createElement("canvas")
-        const ctx = canvas.getContext("2d")!
-
-        let width = img.width
-        let height = img.height
-
-        // 👉 если картинка горизонтальная — поворачиваем
-        if (width > height) {
-          canvas.width = 480
-          canvas.height = 640
-
-          ctx.translate(canvas.width / 2, canvas.height / 2)
-          // ctx.rotate(Math.PI / 2)
-
-          ctx.drawImage(img, -height / 2, -width / 2, height, width)
-        } else {
-          // уже вертикальная
-          canvas.width = 480
-          canvas.height = 640
-
-          ctx.drawImage(img, 0, 0, 480, 640)
-        }
-
-        canvas.toBlob(async (blob) => {
-          const file = new File([blob!], "face-capture.jpg", { type: "image/jpeg" })
+      await fetch(image)
+        .then((res) => res.blob())
+        .then(async (blob) => {
+          const file = new File([blob], "face-capture.jpg", { type: "image/jpeg" })
           downloadFile(file, "")
-        }, "image/jpeg")
-
-        setTimeout(() => {
-          console.log("Отработал")
-          setIsSubmitting(false)
-          setTimer(defaultDelay)
-        }, 3000)
-      }
+        })
+      setTimeout(() => {
+        console.log("Отработал")
+        setIsSubmitting(false)
+        setTimer(defaultDelay)
+      }, 3000)
     }
   }
 
