@@ -104,9 +104,8 @@ function App() {
                 }}
                 videoConstraints={{
                   facingMode: frontCamera ? "user" : "environment",
-                  width: { exact: 480 },
-                  height: { exact: 640 },
-                  aspectRatio: { ideal: 9/16 }
+                  width: { ideal: 1080 },
+                  height: { ideal: 1920 },
                 }}
                 forceScreenshotSourceSize
               />
