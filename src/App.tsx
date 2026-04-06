@@ -115,7 +115,6 @@ function App() {
           }
         </div>
         :
-        
         <div>
           <div className="mb-2 d-flex align-items-center">
             <button className="ms-2 check-label" onClick={() => {
@@ -129,7 +128,7 @@ function App() {
             setIsSubmitting(true)
           }}>Сделать запрос</button>
           <div>это мобилка: {isMobile ? "Да" : "Нет"}</div>
-          <div>{navigator.userAgent}</div>
+          {/* <div>{navigator.userAgent}</div> */}
         </div>}
     </>
   );
