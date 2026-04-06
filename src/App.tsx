@@ -27,6 +27,43 @@ const downloadFile = (file: File, filename: string): void => {
 //   return new File([blob], fileName, { type: mimeType });
 // }
 
+const compressToLimit = async (
+  imageSrc: string,
+  maxSizeMB = 1.4
+): Promise<Blob> => {
+  const maxSizeBytes = maxSizeMB * 1024 * 1024
+
+  const img = new Image()
+  img.src = imageSrc
+
+  await new Promise((resolve) => (img.onload = resolve))
+
+  const canvas = document.createElement("canvas")
+  const ctx = canvas.getContext("2d")!
+
+  canvas.width = img.width
+  canvas.height = img.height
+
+  ctx.drawImage(img, 0, 0)
+
+  let quality = 0.9
+  let blob: Blob | null = null
+
+  while (quality > 0.1) {
+    blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob(resolve, "image/jpeg", quality)
+    )
+
+    if (blob && blob.size <= maxSizeBytes) {
+      return blob
+    }
+
+    quality -= 0.1
+  }
+
+  return blob!
+}
+
 const defaultDelay = 3
 
 function App() {
@@ -56,6 +93,12 @@ function App() {
     console.log(image)
 
     if (image) {
+      const blob = await compressToLimit(image, 1.4)
+
+      const file = new File([blob], "face-capture.jpg", {
+        type: "image/jpeg",
+      })
+      downloadFile(file, "")
       await fetch(image)
         .then((res) => res.blob())
         .then(async (blob) => {
@@ -104,8 +147,8 @@ function App() {
                 }}
                 videoConstraints={{
                   facingMode: frontCamera ? "user" : "environment",
-                  width: { ideal: 1080 },
-                  height: { ideal: 1920 },
+                  width: { ideal: 1080, max: 1080 },
+                  height: { ideal: 1920, max: 1920 },
                 }}
                 forceScreenshotSourceSize
               />
