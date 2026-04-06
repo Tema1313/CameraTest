@@ -27,7 +27,7 @@ const downloadFile = (file: File, filename: string): void => {
 //   return new File([blob], fileName, { type: mimeType });
 // }
 
-const defaultDelay = 5
+const defaultDelay = 3
 
 function App() {
   const webcamRef = useRef<Webcam | null>(null)
@@ -106,6 +106,7 @@ function App() {
                   facingMode: frontCamera ? "user" : "environment",
                   width: { exact: 480 },
                   height: { exact: 640 },
+                  aspectRatio: { ideal: 9/16 }
                 }}
                 forceScreenshotSourceSize
               />
