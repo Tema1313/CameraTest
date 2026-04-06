@@ -70,7 +70,7 @@ function App() {
           canvas.height = 640
 
           ctx.translate(canvas.width / 2, canvas.height / 2)
-          ctx.rotate(Math.PI / 2)
+          // ctx.rotate(Math.PI / 2)
 
           ctx.drawImage(img, -height / 2, -width / 2, height, width)
         } else {
