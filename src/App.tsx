@@ -1,26 +1,26 @@
 import "./App.css";
-import { useEffect, useRef, useState } from "react";
-import Webcam from "react-webcam"
+// import { useEffect, useRef, useState } from "react";
+// import Webcam from "react-webcam"
 import { DocumentPdf } from "./PdfDocumentView";
 
 
-const downloadFile = (file: File, filename: string): void => {
-  // Создаем URL для файла
-  const url = URL.createObjectURL(file);
+// const downloadFile = (file: File, filename: string): void => {
+//   // Создаем URL для файла
+//   const url = URL.createObjectURL(file);
 
-  // Создаем элемент для скачивания
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
+//   // Создаем элемент для скачивания
+//   const a = document.createElement('a');
+//   a.href = url;
+//   a.download = filename;
 
-  // Добавляем в DOM, кликаем и удаляем
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+//   // Добавляем в DOM, кликаем и удаляем
+//   document.body.appendChild(a);
+//   a.click();
+//   document.body.removeChild(a);
 
-  // Освобождаем память
-  URL.revokeObjectURL(url);
-};
+//   // Освобождаем память
+//   URL.revokeObjectURL(url);
+// };
 
 // async function urlToFile(url: string, fileName: string, mimeType: string) {
 //   const response = await fetch(url);
@@ -28,99 +28,99 @@ const downloadFile = (file: File, filename: string): void => {
 //   return new File([blob], fileName, { type: mimeType });
 // }
 
-const compressToLimit = async (
-  imageSrc: string,
-  maxSizeMB = 1.4
-): Promise<Blob> => {
-  const maxSizeBytes = maxSizeMB * 1024 * 1024
+// const compressToLimit = async (
+//   imageSrc: string,
+//   maxSizeMB = 1.4
+// ): Promise<Blob> => {
+//   const maxSizeBytes = maxSizeMB * 1024 * 1024
 
-  const img = new Image()
-  img.src = imageSrc
+//   const img = new Image()
+//   img.src = imageSrc
 
-  await new Promise((resolve) => (img.onload = resolve))
+//   await new Promise((resolve) => (img.onload = resolve))
 
-  const canvas = document.createElement("canvas")
-  const ctx = canvas.getContext("2d")!
+//   const canvas = document.createElement("canvas")
+//   const ctx = canvas.getContext("2d")!
 
-  canvas.width = img.width
-  canvas.height = img.height
+//   canvas.width = img.width
+//   canvas.height = img.height
 
-  ctx.drawImage(img, 0, 0)
+//   ctx.drawImage(img, 0, 0)
 
-  let quality = 0.9
-  let blob: Blob | null = null
+//   let quality = 0.9
+//   let blob: Blob | null = null
 
-  while (quality > 0.1) {
-    blob = await new Promise<Blob | null>((resolve) =>
-      canvas.toBlob(resolve, "image/jpeg", quality)
-    )
+//   while (quality > 0.1) {
+//     blob = await new Promise<Blob | null>((resolve) =>
+//       canvas.toBlob(resolve, "image/jpeg", quality)
+//     )
 
-    if (blob && blob.size <= maxSizeBytes) {
-      return blob
-    }
+//     if (blob && blob.size <= maxSizeBytes) {
+//       return blob
+//     }
 
-    quality -= 0.1
-  }
+//     quality -= 0.1
+//   }
 
-  return blob!
-}
+//   return blob!
+// }
 
-const defaultDelay = 3
+// const defaultDelay = 3
 
 function App() {
-  const webcamRef = useRef<Webcam | null>(null)
-  const [frontCamera, setFrontCamera] = useState<boolean>(true)
-  const intervalRef = useRef<number | null>(null)
-  const [timer, setTimer] = useState<number>(defaultDelay)
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
-  const [image, setImage] = useState<string>("")
+  // const webcamRef = useRef<Webcam | null>(null)
+  // const [frontCamera, setFrontCamera] = useState<boolean>(true)
+  // const intervalRef = useRef<number | null>(null)
+  // const [timer, setTimer] = useState<number>(defaultDelay)
+  // const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+  // const [image, setImage] = useState<string>("")
 
 
-  const startTimer = () => {
-    intervalRef.current = setInterval(() => {
-      setTimer((prev) => {
-        if (prev <= 1) {
-          clearInterval(intervalRef.current!)
-          const imageSrc = webcamRef.current?.getScreenshot()
-          setImage(imageSrc || "")
-          return 0
-        }
-        return prev - 1
-      })
-    }, 1000)
-  }
+  // const startTimer = () => {
+  //   intervalRef.current = setInterval(() => {
+  //     setTimer((prev) => {
+  //       if (prev <= 1) {
+  //         clearInterval(intervalRef.current!)
+  //         const imageSrc = webcamRef.current?.getScreenshot()
+  //         setImage(imageSrc || "")
+  //         return 0
+  //       }
+  //       return prev - 1
+  //     })
+  //   }, 1000)
+  // }
 
-  const startFaceId = async () => {
-    console.log(image)
+  // const startFaceId = async () => {
+  //   console.log(image)
 
-    if (image) {
-      const blob = await compressToLimit(image, 1.4)
+  //   if (image) {
+  //     const blob = await compressToLimit(image, 1.4)
 
-      const file = new File([blob], "face-capture.jpg", {
-        type: "image/jpeg",
-      })
-      downloadFile(file, "")
-      await fetch(image)
-        .then((res) => res.blob())
-        .then(async (blob) => {
-          const file = new File([blob], "face-capture.jpg", { type: "image/jpeg" })
-          downloadFile(file, "")
-        })
-      setTimeout(() => {
-        console.log("Отработал")
-        setIsSubmitting(false)
-        setTimer(defaultDelay)
-      }, 3000)
-    }
-  }
+  //     const file = new File([blob], "face-capture.jpg", {
+  //       type: "image/jpeg",
+  //     })
+  //     downloadFile(file, "")
+  //     await fetch(image)
+  //       .then((res) => res.blob())
+  //       .then(async (blob) => {
+  //         const file = new File([blob], "face-capture.jpg", { type: "image/jpeg" })
+  //         downloadFile(file, "")
+  //       })
+  //     setTimeout(() => {
+  //       console.log("Отработал")
+  //       setIsSubmitting(false)
+  //       setTimer(defaultDelay)
+  //     }, 3000)
+  //   }
+  // }
 
-  useEffect(() => {
-    if (timer === 0) {
-      startFaceId()
-    }
-  }, [timer])
+  // useEffect(() => {
+  //   if (timer === 0) {
+  //     startFaceId()
+  //   }
+  // }, [timer])
 
-  const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent)
+  // const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent)
 
   return (
     <>

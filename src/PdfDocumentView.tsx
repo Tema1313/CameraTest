@@ -1,12 +1,17 @@
 import { useRef, useState } from "react";
-import { Page, Document } from "react-pdf";
+import { Page, Document, pdfjs } from "react-pdf";
 import testFile from "./assets/PrdTestFile.pdf"
 
-interface IDocumentPdfProps {
-    docUrl?: string
-}
+// interface IDocumentPdfProps {
+//     docUrl?: string
+// }
 
-export const DocumentPdf = (props: IDocumentPdfProps) => {
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.js',
+  import.meta.url
+).toString();
+
+export const DocumentPdf = () => {
     const [numPages, setNumPages] = useState<number | null>(null);
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [scale, setScale] = useState<number>(1);
