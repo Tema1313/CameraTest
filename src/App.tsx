@@ -1,6 +1,7 @@
 import "./App.css";
 import { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam"
+import { DocumentPdf } from "./PdfDocumentView";
 
 
 const downloadFile = (file: File, filename: string): void => {
@@ -123,7 +124,8 @@ function App() {
 
   return (
     <>
-      {isSubmitting ?
+    <DocumentPdf />
+      {/* {isSubmitting ?
         <div>
           {timer !== 0 ?
             <>
@@ -168,10 +170,9 @@ function App() {
           <button onClick={() => {
             startTimer()
             setIsSubmitting(true)
-          }}>Сделать запрос</button>
+          }}>Сделать запрос ого</button>
           <div>это мобилка: {isMobile ? "Да" : "Нет"}</div>
-          {/* <div>{navigator.userAgent}</div> */}
-        </div>}
+        </div>} */}
     </>
   );
 }
