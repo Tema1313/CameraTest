@@ -106,7 +106,7 @@ const WebcamDemo = (): JSX.Element => {
             <p>{`Number of valid faces: ${validFaces.length}`}</p>
             <p>{`Лицо по середине: ${isCenteredTest}`}</p>
             <p>{`Лицо в пределах видимой области кружка: ${isInsideVisibleAreaTest}`}</p>
-            <div style={{ position: 'relative', width: DISPLAY_SIZE, height: DISPLAY_SIZE }}>
+            <div key={frontCamera ? "user" : "environment"} style={{ position: 'relative', width: DISPLAY_SIZE, height: DISPLAY_SIZE }}>
                 <Webcam
                     audio={false}
                     ref={webcamRef}
@@ -122,7 +122,7 @@ const WebcamDemo = (): JSX.Element => {
                     }}
                     mirrored={frontCamera}
                     videoConstraints={{
-                        facingMode: frontCamera ? "user" : "environment",
+                        facingMode: "environment",
                         width: { ideal: 1080, max: 1080 },
                         height: { ideal: 1920, max: 1920 },
                     }}
