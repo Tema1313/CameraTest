@@ -11,7 +11,7 @@ const WebcamDemo = (): JSX.Element => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [containerSize, setContainerSize] = useState({ width: 300, height: 300 });
 
-    const { webcamRef, boundingBox, isLoading } = useFaceDetection({
+    const { webcamRef, boundingBox } = useFaceDetection({
         faceDetectionOptions: {
             model: 'short',
             minDetectionConfidence: 0.9,
@@ -27,6 +27,7 @@ const WebcamDemo = (): JSX.Element => {
                 width: 1080,
             }),
     });
+
 
     // Обновляем размеры контейнера при монтировании и изменении размера окна
     useEffect(() => {
@@ -116,7 +117,6 @@ const WebcamDemo = (): JSX.Element => {
 
     return (
         <div>
-            <p>{`Loading: ${isLoading}`}</p>
             <p>{`Face Detected: ${detected}`}</p>
             <p>{`Number of faces inside circle: ${validFaces.length}`}</p>
             <div ref={containerRef} style={{ width: 300, height: 300 }}>
