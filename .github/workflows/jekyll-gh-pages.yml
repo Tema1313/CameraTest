@@ -38,14 +38,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages   # ветка, куда gh-pages публикует файлы
-          force_orphan: true         # опционально, чтобы ветка была чистой
-
   # Deployment job
   deploy:
     environment:
@@ -55,5 +47,9 @@ jobs:
     needs: build
     steps:
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages   # ветка, куда gh-pages публикует файлы
+          force_orphan: true         # опционально, чтобы ветка была чистой
