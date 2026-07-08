@@ -20,7 +20,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci          # или npm install
+        run: npm install --force          # или npm install
 
       - name: Build
         run: npm run build   # это выполнит tsc -b && vite build
