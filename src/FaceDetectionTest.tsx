@@ -43,6 +43,9 @@ const WebcamDemo = (): JSX.Element => {
             }),
     });
 
+    let isCenteredTest = false
+    let isInsideVisibleAreaTest = false
+
     const validFaces = boundingBox.filter((box) => {
         // В библиотеке box.xCenter — это левая граница (left), а box.yCenter — верхняя (top)
 
@@ -84,9 +87,8 @@ const WebcamDemo = (): JSX.Element => {
         const maxOffset = DISPLAY_SIZE * 0.3;
         const isCentered = distance <= maxOffset;
 
-        // 5. Лицо должно занимать хотя бы 30% кружка (чтобы пользователь не был слишком далеко)
-        // const faceWidth = dispRight - dispLeft;
-        // const faceHeight = dispBottom - dispTop;
+        isCenteredTest = isCentered
+        isInsideVisibleAreaTest = isInsideVisibleArea
 
         return isInsideVisibleArea && isCentered;
     });
@@ -94,22 +96,25 @@ const WebcamDemo = (): JSX.Element => {
     // Для безопасности Face-ID можно требовать, чтобы в кадре было ровно одно лицо
     const detected = validFaces.length === 1;
 
+
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
             <p>{`Face Detected: ${detected}`}</p>
             <p>{`Number of valid faces: ${validFaces.length}`}</p>
+            <p>{`Лицо по середине: ${isCenteredTest}`}</p>
+            <p>{`Лицо в пределах видимой области кружка: ${isInsideVisibleAreaTest}`}</p>
             <div style={{ position: 'relative', width: DISPLAY_SIZE, height: DISPLAY_SIZE }}>
                 <Webcam
                     audio={false}
                     ref={webcamRef}
-                    forceScreenshotSourceSize // Отлично, что это есть — для верификации нужно полное фото 1080x1920
+                    forceScreenshotSourceSize
                     screenshotFormat="image/jpeg"
                     style={{
                         borderRadius: "50%",
                         width: DISPLAY_SIZE,
                         height: DISPLAY_SIZE,
                         objectFit: "cover",
-                        // Визуальная подсветка статуса для пользователя
                         border: detected ? '4px solid green' : '4px solid red',
                         transition: 'border 0.3s ease',
                     }}
