@@ -4,15 +4,15 @@ import FaceDetection from '@mediapipe/face_detection';
 import { Camera } from '@mediapipe/camera_utils';
 import type { JSX } from 'react';
 
-const width = 500;
-const height = 500;
+// const width = 500;
+// const height = 500;
 
 // Допуск: лицо считается «полным», если его bbox не выходит за границы кадра
 // Можно ужесточить, добавив отступ (margin), чтобы лицо было не вплотную к краю
 const MARGIN = 0.05; // 5% от размера кадра
 
 const WebcamDemo = (): JSX.Element => {
-    const { webcamRef, boundingBox, isLoading, facesDetected } = useFaceDetection({
+    const { webcamRef, boundingBox, isLoading } = useFaceDetection({
         faceDetectionOptions: {
             model: 'short',
             minDetectionConfidence: 0.9,
@@ -24,8 +24,8 @@ const WebcamDemo = (): JSX.Element => {
         camera: ({ mediaSrc, onFrame }: CameraOptions) =>
             new Camera(mediaSrc, {
                 onFrame,
-                width,
-                height,
+                height: 1920,
+                width: 1080
             }),
     });
 
@@ -46,20 +46,28 @@ const WebcamDemo = (): JSX.Element => {
 
     const detected = fullyVisibleBoxes.length > 0;
 
-
     return (
         <div>
             <p>{`Loading: ${isLoading}`}</p>
             <p>{`Face Detected: ${detected}`}</p>
             <p>{`Number of faces detected: ${fullyVisibleBoxes.length}`}</p>
-            <div style={{ width, height }}>
+            <div>
                 <Webcam
+                    audio={false}
                     ref={webcamRef}
                     forceScreenshotSourceSize
+                    screenshotFormat="image/jpeg"
                     style={{
-                        height,
-                        width,
-                        position: 'absolute',
+                        borderRadius: "50%",
+                        width: 300,
+                        height: 300,
+                        objectFit: "cover",
+                    }}
+                    mirrored={true}
+                    videoConstraints={{
+                        facingMode: "user",
+                        width: { ideal: 1080, max: 1080 },
+                        height: { ideal: 1920, max: 1920 },
                     }}
                 />
             </div>
