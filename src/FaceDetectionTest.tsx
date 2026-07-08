@@ -24,7 +24,7 @@ const toDisplayCoords = (nx: number, ny: number) => {
 };
 
 const WebcamDemo = (): JSX.Element => {
-    const [frontCamera, setFrontCamera] = useState<boolean>(true)
+    const [frontCamera,] = useState<boolean>(true)
 
     // ВАЖНО: НЕ передаем mirrored: true в useFaceDetection из-за бага в библиотеке.
     // Мы вручную отзеркалим координаты ниже, чтобы они совпадали с <Webcam mirrored={true} />
@@ -41,10 +41,8 @@ const WebcamDemo = (): JSX.Element => {
             new Camera(mediaSrc, {
                 onFrame,
                 height: 1920,
-                width: 1080,
-                facingMode: "environment"
+                width: 1080
             }),
-
     });
 
     let isCenteredTest = false
@@ -106,9 +104,9 @@ const WebcamDemo = (): JSX.Element => {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
             <p>{`Face Detected: ${detected}`}</p>
             <p>{`Number of valid faces: ${validFaces.length}`}</p>
-            <p>{`Лцо по середине: ${isCenteredTest}`}</p>
-            <p>{`Лцо в пределах видимой области кружка: ${isInsideVisibleAreaTest}`}</p>
-            <div style={{ position: 'relative', width: DISPLAY_SIZE, height: DISPLAY_SIZE }}>
+            <p>{`Лицо по середине: ${isCenteredTest}`}</p>
+            <p>{`Лицо в пределах видимой области кружка: ${isInsideVisibleAreaTest}`}</p>
+            <div key={frontCamera ? "user" : "environment"} style={{ position: 'relative', width: DISPLAY_SIZE, height: DISPLAY_SIZE }}>
                 <Webcam
                     audio={false}
                     ref={webcamRef}
@@ -124,15 +122,15 @@ const WebcamDemo = (): JSX.Element => {
                     }}
                     mirrored={frontCamera}
                     videoConstraints={{
-                        facingMode: "environment",
+                        facingMode: frontCamera ? "user" : "environment",
                         width: { ideal: 1080, max: 1080 },
                         height: { ideal: 1920, max: 1920 },
                     }}
                 />
             </div>
-            <button onClick={() => {
+            {/* <button onClick={() => {
                 setFrontCamera(prev => !prev)
-            }}>Переключить камеру</button>
+            }}>Переключить камеру</button> */}
 
         </div>
     );
