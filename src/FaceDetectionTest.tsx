@@ -62,7 +62,7 @@ const WebcamDemo = (): JSX.Element => {
         const dispBottom = bottomRight.dy;
 
         // 3. Лицо должно быть в пределах видимой области кружка (с небольшим допуском 10%)
-        const margin = DISPLAY_SIZE * 0.3;
+        const margin = DISPLAY_SIZE * 0.2;
         const isInsideVisibleArea =
             dispLeft >= -margin &&
             dispTop >= -margin &&
