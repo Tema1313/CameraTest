@@ -2,7 +2,7 @@ import Webcam from 'react-webcam';
 import { type CameraOptions, useFaceDetection } from 'react-use-face-detection';
 import FaceDetection from '@mediapipe/face_detection';
 import { Camera } from '@mediapipe/camera_utils';
-import type { JSX } from 'react';
+import { useState, type JSX } from 'react';
 
 const DISPLAY_SIZE = 300;
 const VIDEO_WIDTH = 1080;
@@ -24,6 +24,8 @@ const toDisplayCoords = (nx: number, ny: number) => {
 };
 
 const WebcamDemo = (): JSX.Element => {
+    const [frontCamera, setFrontCamera] = useState<boolean>(true)
+
     // ВАЖНО: НЕ передаем mirrored: true в useFaceDetection из-за бага в библиотеке.
     // Мы вручную отзеркалим координаты ниже, чтобы они совпадали с <Webcam mirrored={true} />
     const { webcamRef, boundingBox } = useFaceDetection({
@@ -118,14 +120,18 @@ const WebcamDemo = (): JSX.Element => {
                         border: detected ? '4px solid green' : '4px solid red',
                         transition: 'border 0.3s ease',
                     }}
-                    mirrored={true}
+                    mirrored={frontCamera}
                     videoConstraints={{
-                        facingMode: "user",
+                        facingMode: frontCamera ? "user" : "environment",
                         width: { ideal: 1080, max: 1080 },
                         height: { ideal: 1920, max: 1920 },
                     }}
                 />
             </div>
+            <button onClick={() => {
+                setFrontCamera(prev => !prev)
+            }}>Переключить камеру</button>
+
         </div>
     );
 };
