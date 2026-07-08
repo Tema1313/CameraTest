@@ -41,8 +41,10 @@ const WebcamDemo = (): JSX.Element => {
             new Camera(mediaSrc, {
                 onFrame,
                 height: 1920,
-                width: 1080
+                width: 1080,
+                facingMode: "environment"
             }),
+
     });
 
     let isCenteredTest = false
@@ -106,7 +108,7 @@ const WebcamDemo = (): JSX.Element => {
             <p>{`Number of valid faces: ${validFaces.length}`}</p>
             <p>{`Лицо по середине: ${isCenteredTest}`}</p>
             <p>{`Лцо в пределах видимой области кружка: ${isInsideVisibleAreaTest}`}</p>
-            <div key={frontCamera ? "user" : "environment"} style={{ position: 'relative', width: DISPLAY_SIZE, height: DISPLAY_SIZE }}>
+            <div style={{ position: 'relative', width: DISPLAY_SIZE, height: DISPLAY_SIZE }}>
                 <Webcam
                     audio={false}
                     ref={webcamRef}
