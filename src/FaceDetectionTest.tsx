@@ -105,7 +105,7 @@ const WebcamDemo = (): JSX.Element => {
             <p>{`Face Detected: ${detected}`}</p>
             <p>{`Number of valid faces: ${validFaces.length}`}</p>
             <p>{`Лицо по середине: ${isCenteredTest}`}</p>
-            <p>{`Лицо в пределах видимой области кружка: ${isInsideVisibleAreaTest}`}</p>
+            <p>{`Лцо в пределах видимой области кружка: ${isInsideVisibleAreaTest}`}</p>
             <div key={frontCamera ? "user" : "environment"} style={{ position: 'relative', width: DISPLAY_SIZE, height: DISPLAY_SIZE }}>
                 <Webcam
                     audio={false}
