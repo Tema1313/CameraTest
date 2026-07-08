@@ -65,12 +65,12 @@ const WebcamDemo = (): JSX.Element => {
         const dispBottom = bottomRight.dy;
 
         // 3. Лицо должно быть в пределах видимой области кружка (с небольшим допуском 10%)
-        // const margin = DISPLAY_SIZE * 0.25;
-        // const isInsideVisibleArea =
-        //     dispLeft >= -margin &&
-        //     dispTop >= -margin &&
-        //     dispRight <= DISPLAY_SIZE + margin &&
-        //     dispBottom <= DISPLAY_SIZE + margin;
+        const margin = DISPLAY_SIZE * 0.25;
+        const isInsideVisibleArea =
+            dispLeft >= -margin &&
+            dispTop >= -margin &&
+            dispRight <= DISPLAY_SIZE + margin &&
+            dispBottom <= DISPLAY_SIZE + margin;
 
         // 4. Для Face-ID лицо должно быть примерно по центру кружка
         const faceCenterX = (dispLeft + dispRight) / 2;
@@ -84,11 +84,11 @@ const WebcamDemo = (): JSX.Element => {
         );
 
         // Разрешаем отклонение центра лица не более чем на 30% от радиуса (радиус 150, 30% это 45px)
-        const maxOffset = DISPLAY_SIZE * 0.3;
+        const maxOffset = DISPLAY_SIZE * 0.25;
         const isCentered = distance <= maxOffset;
 
         isCenteredTest = isCentered
-        // isInsideVisibleAreaTest = isInsideVisibleArea
+        isInsideVisibleAreaTest = isInsideVisibleArea
 
         return isCentered;
     });
