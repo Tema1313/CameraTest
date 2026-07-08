@@ -26,7 +26,7 @@ const toDisplayCoords = (nx: number, ny: number) => {
 const WebcamDemo = (): JSX.Element => {
     // ВАЖНО: НЕ передаем mirrored: true в useFaceDetection из-за бага в библиотеке.
     // Мы вручную отзеркалим координаты ниже, чтобы они совпадали с <Webcam mirrored={true} />
-    const { webcamRef, boundingBox, isLoading } = useFaceDetection({
+    const { webcamRef, boundingBox } = useFaceDetection({
         faceDetectionOptions: {
             model: 'short',
             minDetectionConfidence: 0.9,
@@ -85,11 +85,10 @@ const WebcamDemo = (): JSX.Element => {
         const isCentered = distance <= maxOffset;
 
         // 5. Лицо должно занимать хотя бы 30% кружка (чтобы пользователь не был слишком далеко)
-        const faceWidth = dispRight - dispLeft;
-        const faceHeight = dispBottom - dispTop;
-        const isLargeEnough = faceWidth >= DISPLAY_SIZE * 0.3 && faceHeight >= DISPLAY_SIZE * 0.3;
+        // const faceWidth = dispRight - dispLeft;
+        // const faceHeight = dispBottom - dispTop;
 
-        return isInsideVisibleArea && isCentered && isLargeEnough;
+        return isInsideVisibleArea && isCentered;
     });
 
     // Для безопасности Face-ID можно требовать, чтобы в кадре было ровно одно лицо
@@ -97,7 +96,6 @@ const WebcamDemo = (): JSX.Element => {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-            <p>{`Loading: ${isLoading}`}</p>
             <p>{`Face Detected: ${detected}`}</p>
             <p>{`Number of valid faces: ${validFaces.length}`}</p>
             <div style={{ position: 'relative', width: DISPLAY_SIZE, height: DISPLAY_SIZE }}>
