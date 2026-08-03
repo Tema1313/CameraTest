@@ -36,9 +36,6 @@ const WebcamDemo = (): JSX.Element => {
             }),
     });
 
-    let isCenteredTest = false
-    let isInsideVisibleAreaTest = false
-
     const validFaces = boundingBox.filter((box) => {
         const visualLeft = 1 - (box.xCenter + box.width);
         const visualRight = 1 - box.xCenter;
@@ -53,13 +50,6 @@ const WebcamDemo = (): JSX.Element => {
         const dispRight = bottomRight.dx;
         const dispBottom = bottomRight.dy;
 
-        const margin = DISPLAY_SIZE * 0.25;
-        const isInsideVisibleArea =
-            dispLeft >= -margin &&
-            dispTop >= -margin &&
-            dispRight <= DISPLAY_SIZE + margin &&
-            dispBottom <= DISPLAY_SIZE + margin;
-
         const faceCenterX = (dispLeft + dispRight) / 2;
         const faceCenterY = (dispTop + dispBottom) / 2;
         const circleCenter = DISPLAY_SIZE / 2;
@@ -71,9 +61,6 @@ const WebcamDemo = (): JSX.Element => {
 
         const maxOffset = DISPLAY_SIZE * 0.25;
         const isCentered = distance <= maxOffset;
-
-        isCenteredTest = isCentered
-        isInsideVisibleAreaTest = isInsideVisibleArea
 
         return isCentered;
     });
