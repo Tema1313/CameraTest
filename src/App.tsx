@@ -140,6 +140,25 @@ function App() {
   //     // startTimer()
   //   }
   // }, [count])
+  const checkSimple = (i: number) => {
+    for (let j = 2; j <= i / 2; j++) {
+      if (i % j === 0) {
+        return false
+      }
+    }
+    return true
+  }
+
+  const simpleNumbers = (n: number) => {
+    // Проходимся по всему циклу
+    let i = 2
+    while (i <= n) {
+      if (checkSimple(i)) console.log(i)
+      i++
+    }
+  }
+
+  simpleNumbers(97)
 
   return (
     <>
@@ -149,7 +168,7 @@ function App() {
         console.log('Обновили счетчик')
       }}>обновить счетчик</button>
       <div>счетчик: {count}</div> */}
-      <WebcamDemo />
+      {/* <WebcamDemo /> */}
       {/* {isSubmitting ?
         <div>
           {timer !== 0 ?
