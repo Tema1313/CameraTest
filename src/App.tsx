@@ -1,10 +1,8 @@
-import "./App.css";
-import WebcamDemo from "./FaceDetectionTest";
+import FaceDetectionComponent from "./FaceDetection/FaceDetection";
 
 function App() {
-
   return (
-    <WebcamDemo />
+    <FaceDetectionComponent />
   );
 }
 
